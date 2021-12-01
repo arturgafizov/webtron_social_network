@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from .additional_settings.defender_settings import *
 from .additional_settings.swagger_settings import *
 from .additional_settings.cacheops_settings import *
-from .additional_settings.logging_settings import *
 from .additional_settings.celery_settings import *
+from .additional_settings.smtp_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,9 +36,7 @@ INTERNAL_IPS = []
 
 ADMIN_URL = os.environ.get('ADMIN_URL', 'admin')
 
-ADMINS = [
-    ('Nazarii', 'bandirom@ukr.net'),
-]
+
 
 SWAGGER_URL = os.environ.get('SWAGGER_URL')
 
@@ -46,7 +44,7 @@ API_KEY_HEADER = os.environ.get('API_KEY_HEADER')
 API_KEY = os.environ.get('API_KEY')
 
 HEALTH_CHECK_URL = os.environ.get('HEALTH_CHECK_URL')
-
+SITE_ID = 1
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
@@ -56,7 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sites',
+    # 'django.contrib.gis',
 ]
 
 THIRD_PARTY_APPS = [
@@ -65,11 +64,17 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'corsheaders',
     'rosetta',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'imagekit',
+
 ]
 
 LOCAL_APPS = [
     'main.apps.MainConfig',
-
+    'auth_app.apps.AuthAppConfig',
+    'acquaintance.apps.AcquaintanceConfig',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -90,9 +95,6 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'microservice_request.permissions.HasApiKeyOrIsAuthenticated',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     ),
