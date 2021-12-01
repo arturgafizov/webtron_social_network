@@ -52,8 +52,8 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         self.validated_data['password'] = self.validated_data.pop('password1')
         del self.validated_data['password2']
         user = User.objects.create_user(**self.validated_data)
-        # ip_address = get_remote_ip_from_request(request)
-        # get_user_coordinates.delay(ip_address, user.id)
+        ip_address = get_remote_ip_from_request(request)
+        get_user_coordinates.delay(ip_address, user.id)
         setup_user_email(request=request, user=user, addresses=[])
         return user
 
