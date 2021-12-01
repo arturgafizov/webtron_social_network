@@ -45,15 +45,8 @@ python-json-logger==2.0.1
 # Translation
 django-rosetta==0.9.6
 
-# Jaeger OpenTracing
-jaeger-client==4.4.0
-django_opentracing==1.1.0
-
-# Monitoring System
-sentry-sdk==1.3.1
-
-# MicroService Requests
-django-microservice-request==0.1.4.6
-
 # RangeFilter for admin
 django-admin-rangefilter==0.8.1
+
+# Watermark
+django-imagekit==4.0.2
