@@ -55,6 +55,8 @@ services:
       interval: 50s
       timeout: 5s
       retries: 5
+    ports:
+      - 8888:5432
   redis:
     build:
       context: .
@@ -82,6 +84,7 @@ services:
     environment:
       <<: *variables
     env_file:
+      - docker/dev/env/.mailhog.env
       - docker/dev/env/.env
       - docker/dev/env/.db.env
       - docker/prod/env/.data.env
