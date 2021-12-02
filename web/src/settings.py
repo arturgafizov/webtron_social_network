@@ -190,6 +190,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = f'{MICROSERVICE_PREFIX}/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+CACHE_DISTANCE_TIMEOUT = 60 * 2
+
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
