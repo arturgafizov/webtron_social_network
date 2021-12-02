@@ -33,6 +33,8 @@ ARG USER=ubuntu
 
 
 RUN apk update && apk add --no-cache postgresql-dev curl \
+    # install Pillow dependencies
+    jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev
     && addgroup -g $GID -S $USER \
     && adduser -S $USER -G $USER --disabled-password --uid "$UID" \
     && mkdir -p /gunicorn_socket /redis_socket \
