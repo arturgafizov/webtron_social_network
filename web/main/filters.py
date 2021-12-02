@@ -1,5 +1,5 @@
 from django_filters import rest_framework as filters
-from django.db.models import Q
+
 from django.contrib.auth import get_user_model
 
 from .services import get_user_distance
@@ -25,4 +25,3 @@ class ListUserFilter(filters.FilterSet):
             if distance >= value:
                 excluded_users.append(user.id)
         return queryset.exclude(id__in=excluded_users)
-
