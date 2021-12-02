@@ -5,8 +5,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from . import services
-from . import serializers
 
 
 User = get_user_model()
@@ -17,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 class LikesView(GenericAPIView):
-    serializer_class = serializers.LikeSerializers
 
     def get_queryset(self):
         return User.objects.filter(is_active=True)

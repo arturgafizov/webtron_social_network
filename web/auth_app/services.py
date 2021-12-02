@@ -8,7 +8,7 @@ from rest_framework.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVE
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .utils import captcha_request, get_client_ip
+
 from main.decorators import except_shell
 from .processors import add_watermark
 
