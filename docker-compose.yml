@@ -9,14 +9,6 @@ services:
       context: .
       dockerfile: docker/dev/web/Dockerfile
     entrypoint: /entrypoint.sh
-    deploy:
-      resources:
-        limits:
-          cpus: 0.4
-          memory: 388300
-        reservations:
-          cpus: 0.2
-          memory: 194150
     volumes:
       - ./web/:/usr/src/web/:cached
       - redis_socket:/redis_socket
@@ -51,14 +43,6 @@ services:
       dockerfile: docker/dev/db/Dockerfile
     hostname: postgres
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: 0.2
-          memory: 194150
-        reservations:
-          cpus: 0.1
-          memory: 97075
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - postgres_socket:/postgres_socket
@@ -78,14 +62,6 @@ services:
       context: .
       dockerfile: ./docker/dev/redis/Dockerfile
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: 0.1
-          memory: 97075
-        reservations:
-          cpus: 0.05
-          memory: 48537
     volumes:
       - redis_data:/data
       - redis_socket:/redis_socket
@@ -101,14 +77,6 @@ services:
       context: .
       dockerfile: docker/dev/web/Dockerfile
     command: celery -A src worker -l info
-    deploy:
-      resources:
-        limits:
-          cpus: 0.1
-          memory: 97075
-        reservations:
-          cpus: 0.05
-          memory: 48537
     volumes:
       - ./web/:/usr/src/web/:cached
       - redis_socket:/redis_socket
