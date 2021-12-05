@@ -23,7 +23,6 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        # (_('like'), {'fields': ('from_user_id', 'to_user_id', )}),
     )
     add_fieldsets = (
         (None, {
