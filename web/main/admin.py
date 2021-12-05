@@ -5,13 +5,15 @@ from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
+from itertools import chain
+
 User = get_user_model()
 
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     ordering = ('-id',)
-    list_display = ('email', 'full_name', 'is_active', 'gender')
+    list_display = ('email', 'full_name', 'is_active', 'gender', 'likes_list')
     search_fields = ('first_name', 'last_name', 'email', )
 
     fieldsets = (
@@ -30,6 +32,10 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
     readonly_fields = ('id',)
+
+    def likes_list(self, obj):
+        like = obj.like.values_list('id', 'like')
+        return list(chain.from_iterable(like))
 
 
 title = settings.MICROSERVICE_TITLE
