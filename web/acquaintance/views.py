@@ -1,9 +1,6 @@
 import logging
-from django.utils.translation import gettext_lazy as _
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework import status
 from django.contrib.auth import get_user_model
 
 from acquaintance.serializers import AcquaintanceSerializer
@@ -11,8 +8,6 @@ from acquaintance.serializers import AcquaintanceSerializer
 User = get_user_model()
 
 logger = logging.getLogger(__name__)
-
-# Create your views here.
 
 
 class LikesView(GenericAPIView):

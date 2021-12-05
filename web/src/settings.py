@@ -7,6 +7,7 @@ from .additional_settings.swagger_settings import *
 from .additional_settings.cacheops_settings import *
 from .additional_settings.celery_settings import *
 from .additional_settings.smtp_settings import *
+from .additional_settings.jwt_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,8 +36,6 @@ ENABLE_RENDERING = int(os.environ.get('ENABLE_RENDERING', 0))
 INTERNAL_IPS = []
 
 ADMIN_URL = os.environ.get('ADMIN_URL', 'admin')
-
-
 
 SWAGGER_URL = os.environ.get('SWAGGER_URL')
 
@@ -96,7 +95,7 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -207,30 +206,6 @@ ROSETTA_MESSAGES_SOURCE_LANGUAGE_CODE = LANGUAGE_CODE
 ROSETTA_MESSAGES_SOURCE_LANGUAGE_NAME = 'English'
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = False
-
-if JAEGER_AGENT_HOST := os.environ.get('JAEGER_AGENT_HOST'):
-    from jaeger_client import Config
-    from jaeger_client.config import DEFAULT_REPORTING_PORT
-    from django_opentracing import DjangoTracing
-
-    """If you don't need to trace all requests, comment middleware and set OPENTRACING_TRACE_ALL = False
-        More information https://github.com/opentracing-contrib/python-django/#tracing-individual-requests
-    """
-    MIDDLEWARE.insert(0, 'django_opentracing.OpenTracingMiddleware')
-    OPENTRACING_TRACE_ALL = True
-    tracer = Config(
-        config={
-            'sampler': {'type': 'const', 'param': 1},
-            'local_agent': {
-                'reporting_port': os.environ.get('JAEGER_AGENT_PORT', DEFAULT_REPORTING_PORT),
-                'reporting_host': JAEGER_AGENT_HOST,
-            },
-            'logging': int(os.environ.get('JAEGER_LOGGING', False)),
-        },
-        service_name=MICROSERVICE_TITLE,
-        validate=True,
-    ).initialize_tracer()
-    OPENTRACING_TRACING = DjangoTracing(tracer)
 
 if (SENTRY_DSN := os.environ.get('SENTRY_DSN')) and ENABLE_SENTRY:
     # More information on site https://sentry.io/
