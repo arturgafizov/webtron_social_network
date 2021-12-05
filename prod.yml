@@ -30,7 +30,6 @@ services:
       - redis_socket:/redis_socket
       - gunicorn_socket:/gunicorn_socket
       - postgres_socket:/postgres_socket
-      - ./logs/django:/home/ubuntu/web/logs:delegated
     expose:
       - 8000
     environment:
@@ -45,7 +44,6 @@ services:
       - redis
     restart: always
     networks:
-      - microservice_network
       - separated_network
     healthcheck:
       test: curl --fail -s http://localhost:8000$$HEALTH_CHECK_URL || exit 1
@@ -115,7 +113,5 @@ volumes:
   media_volume:
 
 networks:
-  microservice_network:
-    driver: bridge
   separated_network:
     driver: bridge
