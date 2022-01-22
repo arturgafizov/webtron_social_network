@@ -21,8 +21,6 @@ class User(AbstractUser):
     email = models.EmailField(_('Email address'), unique=True)
     gender = models.CharField(max_length=6, choices=GenderChoice.choices)
     avatar = models.ImageField(upload_to=avatar_upload_patch, default='default_avatar.jpeg')
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name='Долгота', null=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name='Широта', null=True)
     like = models.ManyToManyField('self', related_name='subscribers', symmetrical=False, blank=True)
 
     USERNAME_FIELD = 'email'
