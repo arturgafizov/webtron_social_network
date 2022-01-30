@@ -1,10 +1,10 @@
 # pull official base image
 FROM python:3.9.1-alpine
-MAINTAINER bandirom@ukr.net
+MAINTAINER oemr.m.aa@mail.ru
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
 	PYTHONUNBUFFERED=1 \
-	TZ=Europe/Kiev \
+	TZ=Europe/Moscow \
 	LANG=C.UTF-8 \
 	HOME=/usr/src/web
 
