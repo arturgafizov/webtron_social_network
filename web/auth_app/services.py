@@ -1,5 +1,4 @@
 import re
-from PIL import Image
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +9,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 from main.decorators import except_shell
-from .processors import add_watermark
 
 
 User = get_user_model()
