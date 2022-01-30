@@ -27,18 +27,3 @@ def find_dict_in_list(target: list[dict], dict_key, lookup_value) -> dict:
 
 def get_user_language(request) -> str:
     return request.headers.get('Accept-Language', 'en').split(',')[0]
-
-
-def get_remote_ip_from_request(request) -> str:
-    """Retrieve remote ip addr from request.
-
-    :param request: Django request
-    :type: django.http.HttpRequest
-    :return: Ip address
-    :rtype: str
-    """
-    if x_forwarded_for := request.META.get('HTTP_X_FORWARDED_FOR'):
-        ip_addr = x_forwarded_for.split(',')[0]
-    else:
-        ip_addr = request.META.get('REMOTE_ADDR')
-    return ip_addr
