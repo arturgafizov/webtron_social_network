@@ -1,14 +1,14 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from . import views
+from .views import LikeDislikeView
 
-app_name = 'acquaintance'
+app_name = 'actions'
 
 router = DefaultRouter()
 
 urlpatterns = [
-    path('clients/<pk>/match/', views.LikesView.as_view(), name='like')
+    path('actions/', LikeDislikeView.as_view(), name='like_dislike'),
 ]
 
 urlpatterns += router.urls
