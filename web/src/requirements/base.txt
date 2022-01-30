@@ -37,9 +37,7 @@ django-redis==5.0.0
 
 # ImageField
 pillow==8.1.1
+django-imagekit==4.0.2
 
 # Translation
 django-rosetta==0.9.6
-
-# Watermark
-django-imagekit==4.0.2
