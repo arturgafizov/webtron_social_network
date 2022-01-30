@@ -1,13 +1,8 @@
-from math import cos, radians, sqrt
-from django.db.models import F
-from django.conf import settings
-from django.db.models.functions import Sqrt, Abs
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth import get_user_model
 from rest_framework import status
@@ -71,6 +66,7 @@ class UserModelViewSet(ViewSet):
 
 class UserListView(ListAPIView):
     serializer_class = serializers.UserSerializer
+    permission_classes = IsAuthenticated
     filterset_class = ListUserFilter
 
     def get_queryset(self):
