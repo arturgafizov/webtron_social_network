@@ -1,10 +1,7 @@
 from django.contrib.auth import get_user_model
-from rest_framework.reverse import reverse_lazy
-from math import radians, asin, sqrt, sin, cos
-from main.tasks import send_information_email
-from django.core.cache import cache
 
-from django.conf import settings
+from main.tasks import send_information_email
+from main.decorators import except_shell
 
 User = get_user_model()
 
@@ -28,3 +25,10 @@ class CeleryService:
         to_email = user.email,
         send_information_email.delay(subject, html_email_template_name, context, to_email)
 
+
+class UserService:
+
+    @staticmethod
+    @except_shell((User.DoesNotExist,))
+    def get_user(email):
+        return User.objects.get(email=email)
