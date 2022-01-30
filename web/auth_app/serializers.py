@@ -7,8 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from .services import AuthAppService
-from .tasks import get_user_coordinates
-from main.utils import get_remote_ip_from_request
 
 User = get_user_model()
 
@@ -25,11 +23,10 @@ class UserSignUpSerializer(serializers.ModelSerializer):
     gender = serializers.ChoiceField(choices=User.GenderChoice.choices)
     password1 = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
-    avatar = serializers.ImageField(required=False)
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'gender', 'avatar', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'email', 'gender', 'password1', 'password2')
 
     def validate_password1(self, password):
         return get_adapter().clean_password(password)
@@ -52,8 +49,6 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         self.validated_data['password'] = self.validated_data.pop('password1')
         del self.validated_data['password2']
         user = User.objects.create_user(**self.validated_data)
-        ip_address = get_remote_ip_from_request(request)
-        get_user_coordinates.delay(ip_address, user.id)
         setup_user_email(request=request, user=user, addresses=[])
         return user
 
